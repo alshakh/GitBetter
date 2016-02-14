@@ -4,6 +4,11 @@ if [[ "$@" == "" ]] ; then
     exit 1
 fi
 
+# function to make error output standard
+error() {
+    echo "gb: $1" >&2
+}
+
 #== parse if completion or execution {{{
 executionMode=1
 completionMode=2
@@ -17,7 +22,7 @@ fi
 #== }}}
 
 if [ -z "$1" ] ; then
-    echo "gb: No command passed" >&2
+    error "No command passed" >&2
     exit 1
 fi
 
@@ -35,7 +40,7 @@ for path in ${__gb_path//:/ }; do
                 __run__ "$args"
                 exit $?
             else
-                echo "gb: command $cmd doesn't have a __run__ function" >&2
+                error "command $cmd doesn't have a __run__ function"
                 exit 1
             fi
         else
@@ -48,7 +53,7 @@ for path in ${__gb_path//:/ }; do
         fi
     fi
 done
-echo "gb: command $cmd is not known" >&2
+error "command $cmd is not known"
 exit 1
 
 #== }}}
