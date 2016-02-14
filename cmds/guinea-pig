@@ -1,0 +1,9 @@
+
+__run__() {
+    echo "DFJLKF"
+}
+
+__complete__() {
+    echo "abc bcd add cde"
+}
+

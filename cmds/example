@@ -1,0 +1,19 @@
+#!/bin/bash
+
+__run__() {
+    echo "# Example command"
+    if gb -is-in-repo ; then
+        echo "Running: Inside $(gb -get-root)"
+    else
+        echo "Running: Outside a repo"
+    fi
+    echo "Arguments:$@"
+}
+
+__complete__() {
+    # arguments are done arguments and not the current
+    # for example `gb example a|` will have empty arguments because `a` is not done.
+    #         and `gb example abc d|` will have abc in the arguments because it's perivous
+    # This function should return every possible input after all $@
+    echo ""
+}

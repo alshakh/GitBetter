@@ -1,0 +1,9 @@
+
+
+
+__run__() {
+    cat <<EOF
+Usage:
+    gb command [args]
+EOF
+}

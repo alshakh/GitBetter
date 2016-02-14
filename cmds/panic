@@ -1,0 +1,9 @@
+
+__run__() {
+    gb -is-in-repo || return 1
+
+    # TODO : check wip
+    # TODO : ask user
+
+    #git reset HEAD --hard && git clean -df
+}

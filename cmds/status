@@ -1,0 +1,13 @@
+#!/bin/bash
+
+__run__() {
+    gb -is-in-repo || return 1
+
+    echo "Current Branch: $(gb -get-current-branch)"
+    echo "# Untracked"
+    git ls-files . --exclude-standard --others | sed 's/^/   /'
+    echo "# Modified"
+    git ls-files -m | sed 's/^/   /'
+    echo "# Added"
+    git diff --cached --name-only | sed 's/^/   /'
+}

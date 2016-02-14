@@ -1,0 +1,10 @@
+
+__run__() {
+    gb -is-in-repo || return 1
+
+    git rev-parse --show-toplevel
+}
+
+__complete__() {
+    return 0 # No completion
+}

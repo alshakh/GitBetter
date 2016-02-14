@@ -1,0 +1,19 @@
+#!/bin/bash
+
+__run__() {
+    cat <<EOF
+
+__run__() {
+
+}
+
+__complete__() {
+    return 1 # normal file completion. For no completion return 0
+}
+
+__help__() {
+    return 0
+}
+
+EOF
+}

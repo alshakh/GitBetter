@@ -1,0 +1,6 @@
+
+__run__() {
+    gb -is-in-repo || return 1
+
+    git name-rev --name-only HEAD | cut -d"~" -f1 # cut ~ in case of detatched HEAD
+}

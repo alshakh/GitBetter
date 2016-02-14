@@ -1,0 +1,18 @@
+#!/bin/bash
+
+__run__() {
+    [[ -z $1 ]] && {
+        echo "ERROR"
+        return 1
+    }
+    cmdFile="$__gb_dir/cmds/$1"
+
+    if [ ! -f "$cmdFile" ] ; then
+        cmdFile="$__gb_dir/cmds/$1"
+        gb -command-template > $cmdFile
+
+        chmod +x -- $cmdFile
+    fi
+
+    gedit $cmdFile
+}

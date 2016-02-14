@@ -1,0 +1,13 @@
+
+
+__run__() {
+    gb -is-in-repo || return 1
+
+    # TODO : control output
+
+    if [[ "$#" == 0 ]] ; then
+        git add -A
+    else
+        git add "$@"
+    fi
+}
