@@ -16,3 +16,9 @@ __run__() {
 
     gedit $cmdFile
 }
+
+__complete__() {
+        for path in ${__gb_path//:/ }; do
+            find $path -type f -printf "%f\n"
+        done
+}
