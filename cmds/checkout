@@ -1,0 +1,23 @@
+
+
+__run__() {
+    gb -is-in-repo || return 1
+    
+    # TODO : check if what is passed is a branch
+    
+    (( $# == 0 )) && {
+        echo "No branch passed" >&2
+        return 1
+    }
+    
+    git checkout $1
+    return $?
+}
+
+__complete__() {
+    if (( $# == 0 )) ; then
+        gb -get-branches
+    fi
+    return 0
+
+}

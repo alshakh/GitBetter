@@ -1,0 +1,17 @@
+
+__run__() {
+    gb -is-in-repo || return 1
+    
+    git branch | cut -c 3-
+    
+    return 0
+}
+
+__complete__() {
+    return 0
+}
+
+__help__() {
+    return 0
+}
+
