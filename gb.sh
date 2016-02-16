@@ -37,7 +37,7 @@ for path in ${__gb_path//:/ }; do
 
         if [[ $runMode == $executionMode ]] ; then
             if type __run__ &> /dev/null ; then
-                __run__ "$args"
+                __run__ $args
                 exit $?
             else
                 error "command $cmd doesn't have a __run__ function"
@@ -45,7 +45,7 @@ for path in ${__gb_path//:/ }; do
             fi
         else
             if type __complete__ &> /dev/null ; then
-                __complete__ "$args"
+                __complete__ $args
                 exit $?
             else
                 exit 1
