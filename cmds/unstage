@@ -17,7 +17,7 @@ __run__() {
 
 __complete__() {
     local rt=$(gb -get-root)
-    for q in $(git diff --cached --name-only | sed "s@^@${rt}/@")
+    for q in $(gb -get-staged --names-only | sed "s@^@${rt}/@")
     do
         echo $(realpath "$q" --relative-to="$(pwd)")
     done

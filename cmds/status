@@ -9,5 +9,5 @@ __run__() {
     echo "# Modified"
     git ls-files -m | sed 's/^/   /'
     echo "# Added"
-    git diff --cached --name-only | sed 's/^/   /'
+    gb -get-staged | sed 's/^/   /'
 }
