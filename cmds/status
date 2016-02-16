@@ -5,9 +5,9 @@ __run__() {
 
     echo "Current Branch: $(gb -get-current-branch)"
     echo "# Untracked"
-    git ls-files . --exclude-standard --others | sed 's/^/   /'
+    gb -get-untracked | sed 's/^/   /'
     echo "# Modified"
-    git ls-files -m | sed 's/^/   /'
+    gb -get-modified | sed 's/^/   /'
     echo "# Added"
     gb -get-staged | sed 's/^/   /'
 }
