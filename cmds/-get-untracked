@@ -1,9 +1,9 @@
 
 __run__() {
     gb -is-in-repo || return 1
-    
-    git ls-files . --exclude-standard --others
-    
+
+    git ls-files . --full-name --exclude-standard --others
+
     return 0
 }
 
@@ -14,4 +14,3 @@ __complete__() {
 __help__() {
     return 0
 }
-
