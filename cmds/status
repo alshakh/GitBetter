@@ -3,11 +3,20 @@
 __run__() {
     gb -is-in-repo || return 1
 
-    echo "Current Branch: $(gb -get-current-branch)"
-    echo "# Untracked"
+    echo -e "On branch: \e[34m$(gb -get-current-branch)\e[39m"
+    
+    echo "Untracked"
+    printf "\e[91m"
     gb -get-untracked | sed 's/^/   /'
-    echo "# Modified"
+    printf "\e[39m"
+    
+    echo "Modified"
+    printf "\e[91m"
     gb -get-modified | sed 's/^/   /'
-    echo "# Added"
+    printf "\e[39m"
+    
+    echo "Staged to be commited"
+    printf "\e[32m"
     gb -get-staged | sed 's/^/   /'
+    printf "\e[39m"
 }
