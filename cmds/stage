@@ -1,6 +1,7 @@
 
 
 __run__() {
+
     gb -is-in-repo || return 1
 
     # TODO : control output
@@ -10,4 +11,14 @@ __run__() {
     else
         git add "$@"
     fi
+}
+
+__complete__() {
+    (
+        local rt=$(gb -get-root)
+        gb -get-modified --names-only | sed "s@^@${rt}/@"
+        gb -get-untracked | sed "s@^@${rt}/@"
+    ) | while read p ; do
+        realpath "$p" --relative-to=$(pwd)
+    done
 }
