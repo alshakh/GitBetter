@@ -1,0 +1,19 @@
+
+
+__run__() {
+
+    gb -is-in-repo || return 1
+
+    # TODO : control output
+
+    local editMode="--no-edit"
+    [ "$1" == "!" ] && {
+        editMode=""
+    }
+    git commit --amend $editMode
+    return $?
+}
+
+__complete__() {
+    return 0
+}
