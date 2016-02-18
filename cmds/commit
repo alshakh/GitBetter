@@ -1,0 +1,24 @@
+
+
+__run__() {
+
+    gb -is-in-repo || return 1
+
+    # TODO : control output
+
+    (( $# > 0 )) || {
+        error "No title passed for the message"
+        return 1
+    }
+    local fullMsg="$1"
+    shift
+    for msg in "$@" ; do
+        fullMsg="$fullMsg"$'\n\n'"$msg"
+    done
+    git commit -m "$fullMsg"
+    return $?
+}
+
+__complete__() {
+    return 0
+}
