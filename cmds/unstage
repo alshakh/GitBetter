@@ -1,31 +1,25 @@
 
 __run__() {
     gb -is-in-repo || exit 1
-    
+
     # default with no argument
     [[ -z "$@" ]] && {
         git reset
         return $?
     }
-    
+
     # called with arguments
     local files=$(readlink -f -- $@)
-    
+
     git reset -- $files
     return $?
 }
 
 __complete__() {
-    local rt=$(gb -get-root)
-    for q in $(gb -get-staged --names-only | sed "s@^@${rt}/@")
-    do
-        echo $(realpath "$q" --relative-to="$(pwd)")
-    done
-
-    return 0
+    git status -s | grep '^[^ ?]' | sed 's/^[A-Z]\+[[:blank:]]\+//'
+    return $?
 }
 
 __help__() {
     return 0
 }
-

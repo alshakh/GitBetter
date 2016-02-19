@@ -8,7 +8,7 @@ __run__() {
         echo "$(color RED "HEAD is detached")"
     }
 
-    local untrackeds="$(gb -get-untracked | sed 's/^/   /')"
+    local untrackeds="$(git status -s | grep '^??' | sed 's/^?? */   /')"
     if ! [ -z "$untrackeds" ] ; then
         echo "Untracked"
         startColor RED
@@ -17,7 +17,7 @@ __run__() {
     fi
 
 
-    local mods="$(gb -get-modified | sed 's/^/   /')"
+    local mods="$(git status -s | grep '^ ' | sed 's/^ */   /')"
     if ! [ -z "$mods" ] ; then
         echo "Modified:-"
         startColor RED
@@ -25,7 +25,7 @@ __run__() {
         endColor
     fi
 
-    local stags="$(gb -get-staged | sed 's/^/   /')"
+    local stags="$(git status -s | grep '^[^ ?]' | sed 's/^/   /')"
     if ! [ -z "$stags" ] ; then
         echo "Staged $(color GREY "To be commited"):-"
         startColor GREEN

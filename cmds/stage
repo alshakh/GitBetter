@@ -14,11 +14,6 @@ __run__() {
 }
 
 __complete__() {
-    (
-        local rt=$(gb -get-root)
-        gb -get-modified --names-only | sed "s@^@${rt}/@"
-        gb -get-untracked | sed "s@^@${rt}/@"
-    ) | while read p ; do
-        realpath "$p" --relative-to=$(pwd)
-    done
+    git status -s | grep '^\( \|??\)' | sed 's/^ *[A-Z?]\+[[:blank:]]\+//'
+    return $?
 }
