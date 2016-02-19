@@ -1,0 +1,18 @@
+
+
+__run__() {
+
+    gb -is-in-repo || return 1
+
+    local viewMode="--oneline"
+    [ "$1" == "!" ] && {
+        viewMode=""
+        shift
+    }
+    git log $viewMode "$@"
+    return $?
+}
+
+__complete__() {
+    return 0
+}
