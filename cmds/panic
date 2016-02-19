@@ -3,7 +3,19 @@ __run__() {
     gb -is-in-repo || return 1
 
     # TODO : check wip
-    # TODO : ask user
+    # TODO : abort if rebase or merge
 
-    #git reset HEAD --hard && git clean -df
+    if [ "$1" == "!" ] ; then
+        git reset HEAD --hard &> /dev/null
+        git clean -df &> /dev/null
+        echo "HEAD is now at $(color YELLOW "$(git log HEAD --oneline -n 1)")"
+        return 0
+    else
+        error "This is a dangerous command. Must pass '!' as an argument to force it"
+        return 1
+    fi
+}
+
+__complete__() {
+    return 0
 }
