@@ -20,6 +20,6 @@ __complete__() {
     return $?
 }
 
-__help__() {
+__usage__() {
     return 0
 }
