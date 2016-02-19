@@ -3,20 +3,35 @@
 __run__() {
     gb -is-in-repo || return 1
 
-    echo -e "On branch: $(color BLUE $(gb -get-current-branch))"
+    echo "On branch: $(color BLUE $(gb -get-current-branch))"
+    gb -is-detached-head && {
+        echo "$(color RED "HEAD is detached")"
+    }
 
-    echo "Untracked"
-    startColor RED
-    gb -get-untracked | sed 's/^/   /'
-    endColor
+    local untrackeds="$(gb -get-untracked | sed 's/^/   /')"
+    if ! [ -z "$untrackeds" ] ; then
+        echo "Untracked"
+        startColor RED
+        echo "$untrackeds"
+        endColor
+    fi
 
-    echo "Modified"
-    startColor RED
-    gb -get-modified | sed 's/^/   /'
-    endColor
 
-    echo "Staged to be commited"
-    startColor GREEN
-    gb -get-staged | sed 's/^/   /'
-    endColor
+    local mods="$(gb -get-modified | sed 's/^/   /')"
+    if ! [ -z "$mods" ] ; then
+        echo "Modified:-"
+        startColor RED
+        echo "$mods"
+        endColor
+    fi
+
+    local stags="$(gb -get-staged | sed 's/^/   /')"
+    if ! [ -z "$stags" ] ; then
+        echo "Staged $(color GREY "To be commited"):-"
+        startColor GREEN
+        echo "$stags"
+        endColor
+    else
+        echo $(color YELLOW "No staged changes to be commited")
+    fi
 }
