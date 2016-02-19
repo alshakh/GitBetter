@@ -28,7 +28,8 @@ endColor() {
 }
 color() {
     startColor $1
-    printf "$2"
+    shift
+    printf "$*"
     endColor
 }
 #== parse if completion or execution {{{
