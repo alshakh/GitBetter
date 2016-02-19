@@ -2,7 +2,7 @@
 __run__() {
     gb -is-in-repo || return 1
 
-    git ls-files . --full-name --exclude-standard --others
+    git ls-files . --exclude-standard --others
 
     return 0
 }

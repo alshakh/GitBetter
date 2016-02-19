@@ -17,13 +17,13 @@ __run__() {
         esac
         shift # past argument or value
     done
-    
-    if $namesOnly ; then 
-        git diff --cached --name-only
+
+    if $namesOnly ; then
+        git diff --cached --name-only --relative
     else
-         git diff --cached --name-status | sed -e "s/\(^.\)[[:blank:]]/\1$delimiter/"
+         git diff --cached --name-status --relative | sed -e "s/\(^.\)[[:blank:]]/\1$delimiter/"
     fi
-    
+
     return 0
 }
 
@@ -35,4 +35,3 @@ __complete__() {
 __help__() {
     return 0
 }
-
