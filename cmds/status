@@ -3,20 +3,20 @@
 __run__() {
     gb -is-in-repo || return 1
 
-    echo -e "On branch: \e[34m$(gb -get-current-branch)\e[39m"
-    
+    echo -e "On branch: $(color BLUE $(gb -get-current-branch))"
+
     echo "Untracked"
-    printf "\e[91m"
+    startColor RED
     gb -get-untracked | sed 's/^/   /'
-    printf "\e[39m"
-    
+    endColor
+
     echo "Modified"
-    printf "\e[91m"
+    startColor RED
     gb -get-modified | sed 's/^/   /'
-    printf "\e[39m"
-    
+    endColor
+
     echo "Staged to be commited"
-    printf "\e[32m"
+    startColor GREEN
     gb -get-staged | sed 's/^/   /'
-    printf "\e[39m"
+    endColor
 }
