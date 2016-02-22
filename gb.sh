@@ -49,7 +49,11 @@ if [ -z "$1" ] ; then
     exit 1
 fi
 
-cmd="$1"
+cmdExclimation=""
+if echo "$1" | grep '!$' &> /dev/null ; then
+    cmdExclimation="!"
+fi
+cmd=$(echo "$1" | sed 's/!$//')
 shift
 
 #== execute cmd {{{
@@ -59,7 +63,7 @@ for path in ${__gb_path//:/ }; do
 
         if [[ $runMode == $executionMode ]] ; then
             if type __run__ &> /dev/null ; then
-                __run__ "$@"
+                __run__  $cmdExclimation "$@"
                 exit $?
             else
                 error "command $cmd doesn't have a __run__ function"
