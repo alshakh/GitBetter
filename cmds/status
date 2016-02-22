@@ -3,10 +3,14 @@
 __run__() {
     gb -is-in-repo || return 1
 
-    echo "On branch: $(color BLUE $(gb -get-current-branch))"
-    gb -is-detached-head && {
-        echo "$(color RED "HEAD is detached")"
-    }
+    printf "On: "
+    local ref="$(gb -get-current-ref)"
+    if [[ "$ref" == *'detached'* ]] ; then
+        echo $(color RED "$ref")
+    else
+        echo $(color BLUE "$ref")
+    fi
+
 
     local untrackeds="$(git status -s | grep '^??' | sed 's/^?? */   /')"
     if ! [ -z "$untrackeds" ] ; then
