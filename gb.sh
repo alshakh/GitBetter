@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 if [[ "$@" == "" ]] ; then
     gb -usage
     exit 1

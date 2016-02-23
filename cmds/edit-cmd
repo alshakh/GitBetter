@@ -14,11 +14,15 @@ __run__() {
         chmod +x -- $cmdFile
     fi
 
-    gedit $cmdFile
+    vim $cmdFile
 }
 
 __complete__() {
-        for path in ${__gb_path//:/ }; do
-            find $path -type f -printf "%f\n"
-        done
+    local cur=$(sed 's/^\^//' <<< "${!#}")
+    local posss="";
+    for path in ${__gb_path//:/ }; do
+        posss="$posss $(find $path | sed 's@.*/@@')"
+    done
+
+    compgen -W "$posss" -- $cur
 }

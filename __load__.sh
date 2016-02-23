@@ -13,10 +13,6 @@ export __gb_path="$__gb_dir/cmds"
 #= }}}
 
 #= Define gl command {{{
-gb() {
-    "${__gb_dir}/gb.sh" "$@"
-}
-export -f gb
 source "${__gb_dir}/gb-completion.sh"
 complete -F __gb_completion gb
 #= }}}

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 __gb_completion() {
 
@@ -9,7 +9,7 @@ __gb_completion() {
     if [[ $COMP_CWORD == 1 ]] ; then
         local cmdList=""
         for path in ${__gb_path//:/ }; do
-            cmdList="$cmdList"" "$(find $path -type f -printf "%f\n")
+            cmdList="$cmdList $(find $path | sed 's@.*/@@')"
         done
         #
         COMPREPLY=( $(compgen -W "${cmdList}" -- ${cur}) )
