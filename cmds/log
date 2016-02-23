@@ -4,12 +4,12 @@ __run__() {
 
     gb -is-in-repo || return 1
 
-    local viewMode="--oneline"
-    [ "$1" == "!" ] && {
-        viewMode=""
-        shift
-    }
-    git log $viewMode "$@"
+    if [ "$1" == "!" ] ; then
+         git log "$@" 
+    else
+        git log "$@" --graph --pretty=format:'%C(yellow)%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    fi
+    
     return $?
 }
 
