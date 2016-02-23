@@ -31,8 +31,16 @@ __run__() {
 }
 
 __complete__() {
-    if (( $# == 0 )) ; then
-        gb -get-branches
+    gb -is-in-repo || return 0
+
+    local cur=$(sed 's/^\^//' <<< "${!#}")
+    if (( $# == 1 )) ; then
+        local poss="$(gb -get-branches)"
+        [ -z "$cur" ] || {
+            poss="$poss $(git rev-list --all --abbrev-commit)"
+        }
+
+        compgen -W "$poss" -- $cur
     fi
     return 0
 }

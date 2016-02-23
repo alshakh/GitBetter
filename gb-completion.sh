@@ -14,13 +14,11 @@ __gb_completion() {
         #
         COMPREPLY=( $(compgen -W "${cmdList}" -- ${cur}) )
     elif (( $COMP_CWORD >= 2 )) ; then
-        # Define function to get completion lists
-        
-        # call `gb @COMPLETION@ finished-arguments` and not cur
-        local possibilities
-        possibilities="$(gb @COMPLETION@ ${COMP_WORDS[1]} ${COMP_WORDS[@]:2:$COMP_CWORD-2})"
+        # call `gb @COMPLETION@ finished-arguments ^cur`
+        local result
+        result="$(gb @COMPLETION@ ${COMP_WORDS[1]} ${COMP_WORDS[@]:2:$COMP_CWORD-2} ^$cur)"
         if (( $? == 0 )) ; then
-            COMPREPLY=( $(compgen -W "${possibilities}" -- ${cur}) )
+            COMPREPLY=( ${result[@]} )
         else
             COMPREPLY=( $(compgen -f -- ${cur}) )
         fi

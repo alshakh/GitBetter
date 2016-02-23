@@ -14,6 +14,10 @@ __run__() {
 }
 
 __complete__() {
-    git status -s | grep '^\( \|??\)' | sed 's/^ *[A-Z?]\+[[:blank:]]\+//'
-    return $?
+    gb -is-in-repo || return 0
+
+    local cur=$(sed 's/^\^//' <<< "${!#}")
+    local posss="$(git status -s | grep '^\( \|??\)' | sed 's/^ *[A-Z?]\+[[:blank:]]\+//')"
+    compgen -W "$posss" -- $cur
+    return 0
 }
