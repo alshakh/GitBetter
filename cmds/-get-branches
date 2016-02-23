@@ -2,7 +2,7 @@
 __run__() {
     gb -is-in-repo || return 1
     
-    git branch | cut -c 3-
+    git branch | sed '/(/d' | cut -c 3-
     
     return 0
 }
