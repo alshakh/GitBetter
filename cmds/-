@@ -1,0 +1,12 @@
+
+__run__() {
+    git "$@"
+}
+
+__complete__() {
+    return 1 # normal file completion. For no completion return 0
+}
+
+__usage__() {
+    return 0
+}
