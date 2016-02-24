@@ -1,0 +1,74 @@
+#!/bin/bash
+
+__run__() {
+	local relatives="yes"
+	local remotes="yes"
+	local branches="yes"
+	local tags="yes"
+	while (( $# > 0 )) ; do
+		case "$1" in
+			--no-relatives)
+				relatives="no"
+			;;
+			--no-remotes)
+				remotes="no"
+			;;
+			--no-branches)
+				branches="no"
+			;;
+			--no-tags)
+				tags="no"
+			;;
+			--only-relatives)
+				relatives="yes"
+				remotes="no"
+				branches="no"
+				tags="no"
+			;;
+			--only-remotes)
+				relatives="no"
+				remotes="yes"
+				branches="no"
+				tags="no"
+			;;
+			--only-branches)
+				relatives="no"
+				remotes="no"
+				branches="yes"
+				tags="no"
+			;;
+			--only-tags)
+				relatives="no"
+				remotes="no"
+				branches="no"
+				tags="yes"
+			;;
+		esac
+		shift
+	done
+
+	format="refname:short"
+	refs=""
+
+	[ $relatives = "yes" ] && {
+		local dir="$(gb -get-git-dir)"
+		for i in HEAD FETCH_HEAD ORIG_HEAD MERGE_HEAD; do
+			if [ -e "$dir/$i" ]; then echo $i; fi
+		done
+	}
+
+	[ $remotes = "yes" ] && {
+		refs="$refs refs/remotes"
+	}
+
+	[ $branches = "yes" ] && {
+		refs="$refs refs/heads"
+	}
+
+	[ $tags = "yes" ] && {
+		refs="$refs refs/tags"
+	}
+	if ! [ -z "$refs" ] ; then
+		git for-each-ref --format="%($format)" $refs
+	fi
+}

@@ -35,7 +35,7 @@ __complete__() {
 
     local cur=$(sed 's/^\^//' <<< "${!#}")
     if (( $# == 1 )) ; then
-        local poss="$(gb -get-branches)"
+        local poss="$(gb -list-refs)"
         [ -z "$cur" ] || {
             poss="$poss $(git rev-list --all --abbrev-commit)"
         }

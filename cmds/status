@@ -4,11 +4,14 @@ __run__() {
     gb -is-in-repo || return 1
 
     printf "On: "
-    local ref="$(gb -get-current-ref)"
-    if [[ "$ref" == *'detached'* ]] ; then
-        echo $(color RED "$ref")
+    if gb -is-detached-head ; then
+        startColor RED
+        echo "(HEAD detached at $(gb -resolve HEAD))"
+        endColor
     else
-        echo $(color BLUE "$ref")
+        startColor BLUE
+        git status | grep "On branch" | sed 's/On branch //'
+        endColor
     fi
 
 

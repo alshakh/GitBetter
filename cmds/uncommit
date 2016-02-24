@@ -6,7 +6,7 @@ __run__() {
         error "HEAD is detached!"
         return 1
     }
-    [ $(gb -get-init-commit) == $(gb -get-current-commit) ] && {
+    [ $(gb -get-init-commit) == $(gb -resolve! HEAD) ] && {
         error "current commit is the init commit"
         return 1
     }

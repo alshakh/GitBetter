@@ -1,0 +1,24 @@
+
+__run__() {
+    gb -is-in-repo || return 1
+
+    hashFormat="--short"
+    refToResolve=''
+    while (( $# > 0 )) ; do
+        case "$1" in
+            !)
+                hashFormat=""
+            ;;
+            *)
+                refToResolve="$refToResolve $1"
+            ;;
+        esac
+        shift
+    done
+
+    git rev-parse $hashFormat $refToResolve
+}
+
+__complete__() {
+    return 0
+}

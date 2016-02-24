@@ -1,0 +1,9 @@
+
+__run__() {
+    gb -is-in-repo || return 1
+    git rev-parse --git-dir
+}
+
+__complete__() {
+    return 0
+}
