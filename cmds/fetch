@@ -1,0 +1,22 @@
+
+__run__() {
+    gb -is-in-repo || return 1
+
+    [ $1 == "!" ] && shift
+
+    git fetch "$@"
+}
+
+__complete__() {
+    local cur=$(sed 's/^\^//' <<< "${!#}")
+    if (( $# == 1 )) ; then
+        compgen -W "$(gb -list-remotes)" -- "$cur"
+    elif (( $# > 1 )) ; then
+        local ps=$(gb -list-refs --only-remotes | sed "s@$1/@@" | while read p ; do echo $p:$p ; done)
+        compgen -W "$ps" -- "$cur"
+    fi
+}
+
+__usage__() {
+    return 0
+}
