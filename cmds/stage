@@ -9,7 +9,7 @@ __run__() {
     if [[ "$#" == 0 ]] ; then
         git add -A
     else
-        git add "$@"
+        git add -- "$@"
     fi
 }
 
