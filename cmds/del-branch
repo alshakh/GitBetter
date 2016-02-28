@@ -1,0 +1,26 @@
+
+__run__() {
+    gb -is-in-repo || return 1
+
+
+    local flag="-d"
+    if [[ $1 == "!" ]] ; then
+        flag="-D"
+        shift
+    fi
+
+    git branch $flag "$@"
+}
+
+__complete__() {
+
+    local cur=$(sed 's/^\^//' <<< "${!#}")
+    local posss=$(gb -list-refs --only-branches)
+    compgen -W "$posss" -- $cur
+
+    return 0
+}
+
+__usage__() {
+    return 0
+}
