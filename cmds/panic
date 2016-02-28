@@ -6,10 +6,13 @@ __run__() {
     # TODO : abort if rebase or merge
 
     if [ "$1" == "!" ] ; then
-        git reset HEAD --hard &> /dev/null
-        git clean -df &> /dev/null
-        echo "HEAD is now at $(color YELLOW "$(git log HEAD --oneline -n 1)")"
-        return 0
+        read -r -p "Are you sure? [Y/n]" response
+        if [[ $response =~ ^(Y|y) ]]; then
+            git reset HEAD --hard &> /dev/null
+            git clean -df &> /dev/null
+            echo "HEAD is now at $(color YELLOW "$(git log HEAD --oneline -n 1)")"
+            return 0
+        fi
     else
         error "This is a dangerous command. Must pass '!' as an argument to force it"
         return 1
