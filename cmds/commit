@@ -14,10 +14,10 @@ __run__() {
         error "HEAD is detached. Cannot commit"
         return 1
     }
-    
+
     local fullMsg="$1"
     shift
-    for msg in "$@" ; do
+    for msg in $@ ; do
         fullMsg="$fullMsg"$'\n\n'"$msg"
     done
     git commit -m "$fullMsg"

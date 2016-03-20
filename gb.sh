@@ -4,7 +4,7 @@ if [[ "$@" == "" ]] ; then
     exit 1
 fi
 
-# function to make output standard
+#= function to make output standard {{{
 error() {
     echo "gb: $1" >&2
 }
@@ -32,54 +32,36 @@ color() {
     printf "$*"
     endColor
 }
-#== parse if completion or execution {{{
-executionMode=1
-completionMode=2
+#= }}}
 
-runMode=$executionMode
-if [[ "$1" == "@COMPLETION@" ]] ; then
-
-    runMode=$completionMode
-    shift
-fi
-#== }}}
-
-if [ -z "$1" ] ; then
-    error "No command passed" >&2
+#= Parse $1 command name (define 'cmd' and 'SHOUTING' and then shift){{{
+[ "$1" = "!" ] && {
+    error "'!' is not a commands, append it to a command to make stronger"
     exit 1
-fi
-
-cmdExclimation=""
+}
+SHOUTING=false
 if echo "$1" | grep '!$' &> /dev/null ; then
-    cmdExclimation="!"
+    SHOUTING=true
 fi
-cmd=$(echo "$1" | sed 's/!$//')
+g_cmdName=$(echo "$1" | sed 's/!$//') # long prefix so it doesn't collide with the command file
 shift
+#= }}}
 
-#== execute cmd {{{
-for path in ${__gb_path//:/ }; do
-    if [ -n "$path" ] && [ -f "$path/$cmd" ] ; then
-        source "$path/$cmd"
+#= execute cmd {{{
+for g_path in ${__gb_path//:/ }; do
+    if [ -n "$g_path" ] && [ -f "$g_path/$g_cmdName" ] ; then
 
-        if [[ $runMode == $executionMode ]] ; then
-            if type __run__ &> /dev/null ; then
-                __run__  $cmdExclimation "$@"
-                exit $?
-            else
-                error "command $cmd doesn't have a __run__ function"
-                exit 1
-            fi
+        source "$g_path/$g_cmdName"
+        if type __run__ &> /dev/null ; then
+            __run__ $@
+            exit $?
         else
-            if type __complete__ &> /dev/null ; then
-                __complete__ "$@"
-                exit $?
-            else
-                exit 1
-            fi
+            error "command '$g_cmdName' doesn't have a '__run__' function"
+            exit 1
         fi
+
     fi
 done
-error "command $cmd is not known"
+error "command '$g_cmdName' is not known"
 exit 1
-
-#== }}}
+#= }}}

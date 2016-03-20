@@ -72,3 +72,7 @@ __run__() {
 		git for-each-ref --format="%($format)" $refs
 	fi
 }
+
+__complete__() {
+	compgen -W "--no-relatives --no-remotes --no-branches --no-tags --only-relatives --only-remotes --only-branches --only-tags" -- $CURRENT_TERM
+}

@@ -2,8 +2,7 @@
 __run__() {
     gb -is-in-repo || return 1
 
-    if [ "$1" == "!" ] ; then
-        shift
+    if $SHOUTING ; then
         git push -f "$@"
     else
         git push "$@"
@@ -11,11 +10,10 @@ __run__() {
 }
 
 __complete__() {
-    local cur=$(sed 's/^\^//' <<< "${!#}")
-    if (( $# == 1 )) ; then
-        compgen -W "$(gb -list-remotes)" -- "$cur"
-    elif (( $# > 1 )) ; then
-        compgen -W "$(gb -list-refs --no-relatives)" -- "$cur"
+    if (( $# == 0 )) ; then
+        compgen -W "$(gb -list-remotes)" -- "$CURRENT_TERM"
+    elif (( $# > 0 )) ; then
+        compgen -W "$(gb -list-refs --no-relatives)" -- "$CURRENT_TERM"
     fi
 }
 

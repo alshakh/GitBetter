@@ -5,7 +5,7 @@ __run__() {
     # TODO : check wip
     # TODO : abort if rebase or merge
 
-    if [ "$1" == "!" ] ; then
+    if $SHOUTING ; then
         read -r -p "Are you sure? [Y/n]" response
         if [[ $response =~ ^(Y|y) ]]; then
             git reset HEAD --hard &> /dev/null

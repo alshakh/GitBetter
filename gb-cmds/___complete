@@ -1,0 +1,39 @@
+
+
+# Expected input ^CURRENT [previous]
+
+# provides 'CURRENT_TERM' for __complete__ in the command's file
+
+# local vars are prefixed by c_
+__run__() {
+    local c_cur=$(sed 's/^\^//' <<< "$1")
+    shift
+
+    if (( $# == 0)) ; then # completion in command name
+        local cmdList=""
+        for path in ${__gb_path//:/ }; do
+            cmdList="$cmdList $(find $path | sed 's@.*/@@')"
+        done
+        compgen -W "${cmdList}" -- ${c_cur}
+        return 0
+    else # completion for command arguments
+        local c_cmd=$1
+        c_cmd=$(sed s/!$// <<< $c_cmd) # strip cmd name from !
+        shift
+
+        for c_path in ${__gb_path//:/ }; do
+            if [ -n "$c_path" ] && [ -f "$c_path/$c_cmd" ] ; then
+                source "$c_path/$c_cmd"
+
+                if type __complete__ &> /dev/null ; then
+                    CURRENT_TERM=$c_cur #prepare
+                    __complete__ $@
+                    return $?
+                else
+                    return 1
+                fi
+            fi
+        done
+    fi
+
+}

@@ -6,12 +6,11 @@ __run__() {
 }
 
 __complete__() {
-    local cur=$(sed 's/^\^//' <<< "${!#}")
-    if (( $# == 1 )) ; then
-        compgen -W "$(gb -list-remotes)" -- "$cur"
-    elif (( $# > 1 )) ; then
+    if (( $# == 0 )) ; then
+        compgen -W "$(gb -list-remotes)" -- "$CURRENT_TERM"
+    elif (( $# > 0 )) ; then
         local ps=$(gb -list-refs --only-remotes | sed "s@$1/@@")
-        compgen -W "$ps" -- "$cur"
+        compgen -W "$ps" -- "$CURRENT_TERM"
     fi
 }
 

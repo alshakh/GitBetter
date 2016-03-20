@@ -18,11 +18,10 @@ __run__() {
 }
 
 __complete__() {
-    local cur=$(sed 's/^\^//' <<< "${!#}")
     local posss="";
     for path in ${__gb_path//:/ }; do
         posss="$posss $(find $path | sed 's@.*/@@')"
     done
 
-    compgen -W "$posss" -- $cur
+    compgen -W "$posss" -- $CURRENT_TERM
 }

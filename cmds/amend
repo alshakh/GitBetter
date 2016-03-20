@@ -7,7 +7,7 @@ __run__() {
     # TODO : control output
 
     local editMode="--no-edit"
-    [ "$1" == "!" ] && {
+    $SHOUTING && {
         editMode=""
     }
     git commit --amend $editMode

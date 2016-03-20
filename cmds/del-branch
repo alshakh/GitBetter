@@ -4,9 +4,8 @@ __run__() {
 
 
     local flag="-d"
-    if [[ $1 == "!" ]] ; then
+    if $SHOUTING ; then
         flag="-D"
-        shift
     fi
 
     git branch $flag "$@"
@@ -14,9 +13,8 @@ __run__() {
 
 __complete__() {
 
-    local cur=$(sed 's/^\^//' <<< "${!#}")
     local posss=$(gb -list-refs --only-branches)
-    compgen -W "$posss" -- $cur
+    compgen -W "$posss" -- $CURRENT_TERM
 
     return 0
 }

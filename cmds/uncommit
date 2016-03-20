@@ -13,7 +13,7 @@ __run__() {
     ##
 
     local isHard=""
-    [ "$1" == "!" ] && {
+    $SHOUTING && {
         isHard="--hard"
     }
 

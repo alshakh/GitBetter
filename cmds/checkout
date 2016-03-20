@@ -33,8 +33,8 @@ __run__() {
 __complete__() {
     gb -is-in-repo || return 0
 
-    local cur=$(sed 's/^\^//' <<< "${!#}")
-    if (( $# == 1 )) ; then
+    local cur=$CURRENT_TERM
+    if (( $# == 0 )) ; then
         local poss="$(gb -list-refs)"
         [ -z "$cur" ] || {
             poss="$poss $(git rev-list --all --abbrev-commit)"
