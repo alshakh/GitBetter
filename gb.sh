@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 if [[ "$@" == "" ]] ; then
-    gb -usage
+    gb ??
     exit 1
 fi
 
@@ -53,7 +53,7 @@ for g_path in ${__gb_path//:/ }; do
 
         source "$g_path/$g_cmdName"
         if type __run__ &> /dev/null ; then
-            __run__ $@
+            __run__ "$@"
             exit $?
         else
             error "command '$g_cmdName' doesn't have a '__run__' function"

@@ -9,7 +9,7 @@ __run__() {
 
     if [ ! -f "$cmdFile" ] ; then
         cmdFile="$__gb_dir/cmds/$1"
-        gb -command-template > $cmdFile
+        gb _command-template > $cmdFile
 
         chmod +x -- $cmdFile
     fi

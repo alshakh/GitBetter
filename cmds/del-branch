@@ -1,6 +1,6 @@
 
 __run__() {
-    gb -is-in-repo || return 1
+    gb _is-in-repo || return 1
 
 
     local flag="-d"
@@ -13,7 +13,7 @@ __run__() {
 
 __complete__() {
 
-    local posss=$(gb -list-refs --only-branches)
+    local posss=$(gb _list-refs --only-branches)
     compgen -W "$posss" -- $CURRENT_TERM
 
     return 0

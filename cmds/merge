@@ -1,12 +1,12 @@
 
 __run__() {
-    gb -is-in-repo || return 1
+    gb _is-in-repo || return 1
 
     git merge "$@"
 }
 
 __complete__() {
-    local posss=$(gb -list-refs --no-relatives --no-tags)
+    local posss=$(gb _list-refs --no-relatives --no-tags)
     compgen -W "$posss" -- $CURRENT_TERM
 
     return 0

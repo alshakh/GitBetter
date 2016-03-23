@@ -1,12 +1,12 @@
 
 
 __run__() {
-    gb -is-in-repo || return 1
-    gb -is-detached-head && {
+    gb _is-in-repo || return 1
+    gb _is-detached-head && {
         error "HEAD is detached!"
         return 1
     }
-    [ $(gb -get-init-commit) == $(gb -resolve! HEAD) ] && {
+    [ $(gb _get-init-commit) == $(gb _resolve! HEAD) ] && {
         error "current commit is the init commit"
         return 1
     }

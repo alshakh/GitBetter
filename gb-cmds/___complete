@@ -27,7 +27,7 @@ __run__() {
 
                 if type __complete__ &> /dev/null ; then
                     CURRENT_TERM=$c_cur #prepare
-                    __complete__ $@
+                    __complete__ "$@"
                     return $?
                 else
                     return 1

@@ -1,7 +1,7 @@
 
 
 __run__() {
-    gb -is-in-repo || return 1
+    gb _is-in-repo || return 1
 
     # TODO : check if what is passed is a branch or commit
 
@@ -24,18 +24,18 @@ __run__() {
         echo "Switched to commit $(color YELLOW "$chkMsg")"
     fi
 
-    gb -is-detached-head && {
+    gb _is-detached-head && {
         echo "$(color RED "HEAD is detached")"
     }
     return 0
 }
 
 __complete__() {
-    gb -is-in-repo || return 0
+    gb _is-in-repo || return 0
 
     local cur=$CURRENT_TERM
     if (( $# == 0 )) ; then
-        local poss="$(gb -list-refs)"
+        local poss="$(gb _list-refs)"
         [ -z "$cur" ] || {
             poss="$poss $(git rev-list --all --abbrev-commit)"
         }

@@ -1,15 +1,15 @@
 
 __run__() {
-    gb -is-in-repo || return 1
+    gb _is-in-repo || return 1
 
     git pull "$@"
 }
 
 __complete__() {
     if (( $# == 0 )) ; then
-        compgen -W "$(gb -list-remotes)" -- "$CURRENT_TERM"
+        compgen -W "$(gb _list-remotes)" -- "$CURRENT_TERM"
     elif (( $# > 0 )) ; then
-        local ps=$(gb -list-refs --only-remotes | sed "s@$1/@@")
+        local ps=$(gb _list-refs --only-remotes | sed "s@$1/@@")
         compgen -W "$ps" -- "$CURRENT_TERM"
     fi
 }

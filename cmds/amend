@@ -2,7 +2,7 @@
 
 __run__() {
 
-    gb -is-in-repo || return 1
+    gb _is-in-repo || return 1
 
     # TODO : control output
 

@@ -1,6 +1,6 @@
 
 __run__() {
-    gb -is-in-repo || return 1
+    gb _is-in-repo || return 1
 
     if $SHOUTING ; then
         git push -f "$@"
@@ -11,9 +11,9 @@ __run__() {
 
 __complete__() {
     if (( $# == 0 )) ; then
-        compgen -W "$(gb -list-remotes)" -- "$CURRENT_TERM"
+        compgen -W "$(gb _list-remotes)" -- "$CURRENT_TERM"
     elif (( $# > 0 )) ; then
-        compgen -W "$(gb -list-refs --no-relatives)" -- "$CURRENT_TERM"
+        compgen -W "$(gb _list-refs --no-relatives)" -- "$CURRENT_TERM"
     fi
 }
 

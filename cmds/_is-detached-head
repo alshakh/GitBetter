@@ -1,6 +1,6 @@
 
 __run__() {
-    gb -is-in-repo || return 1
+    gb _is-in-repo || return 1
 
     git status | head -n 1 | grep "HEAD detached" &> /dev/null
     return $?

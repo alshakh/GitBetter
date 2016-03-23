@@ -1,6 +1,6 @@
 
 __run__() {
-    gb -is-in-repo || exit 1
+    gb _is-in-repo || exit 1
 
     # default with no argument
     [[ -z "$@" ]] && {
@@ -9,14 +9,14 @@ __run__() {
     }
 
     # called with arguments
-    local files=$(readlink -f -- $@)
+    local files=$(readlink -f -- "$@")
 
     git reset -- $files &> /dev/null
     return $?
 }
 
 __complete__() {
-    gb -is-in-repo || return 0
+    gb _is-in-repo || return 0
 
     local posss="$(git status -s | sed -e '/^[ ?]/d' -e 's/^?? *//' -e 's/^[A-Z] *//')"
     compgen -W "$posss" -- $CURRENT_TERM

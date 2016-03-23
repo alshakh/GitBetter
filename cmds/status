@@ -1,12 +1,15 @@
 #!/bin/bash
 
 __run__() {
-    gb -is-in-repo || return 1
+    gb _is-in-repo || {
+        error "Not in a git repository"
+        return 1
+    }
 
     printf "On: "
-    if gb -is-detached-head ; then
+    if gb _is-detached-head ; then
         startColor RED
-        echo "(HEAD detached at $(gb -resolve HEAD))"
+        echo "(HEAD detached at $(gb _resolve HEAD))"
         endColor
     else
         startColor BLUE

@@ -2,7 +2,8 @@
 
 __run__() {
 
-    gb -is-in-repo || return 1
+    gb _is-in-repo || return 1
+
 
     # TODO : control output
 
@@ -10,14 +11,14 @@ __run__() {
         error "No title passed for the message"
         return 1
     }
-    gb -is-detached-head && {
+    gb _is-detached-head && {
         error "HEAD is detached. Cannot commit"
         return 1
     }
 
     local fullMsg="$1"
     shift
-    for msg in $@ ; do
+    for msg in "$@" ; do
         fullMsg="$fullMsg"$'\n\n'"$msg"
     done
     git commit -m "$fullMsg"
