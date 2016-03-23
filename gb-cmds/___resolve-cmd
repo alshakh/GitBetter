@@ -1,0 +1,4 @@
+
+__run__() {
+    echo $(resolveCmd "$1")
+}

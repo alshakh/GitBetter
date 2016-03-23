@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+
+### THIS FILE SHOULD BE INDEPENDENT FROM OTHER COMMANDS.
+### This file execute things it can be dependent on itself
+### For example it can't use 'gb ___resolve-cmd'.
+
 if [[ "$@" == "" ]] ; then
     gb ??
     exit 1
@@ -32,6 +37,24 @@ color() {
     printf "$*"
     endColor
 }
+# turn a name to a file path. searches in path and then file
+resolveCmd () {
+    # if $1 starts with './' then just return it, because it's a file and not a command in path
+    if [[ "$1" =~ ^\..* ]]; then
+        echo "$1"
+        return 0
+    else
+        for g_path in ${__gb_path//:/ }; do
+                if [ -n "$g_path" ] && [ -e "$g_path/$1" ] && [ ! -d "$g_path/$1" ]  ; then
+                    echo "$g_path/$1"
+                    return 0
+                fi
+        done
+        # if code reaches here, it's not found in __gb_path, return as is
+        echo "$1"
+        return 0
+    fi
+}
 #= }}}
 
 #= Parse $1 command name (define 'cmd' and 'SHOUTING' and then shift){{{
@@ -48,20 +71,18 @@ shift
 #= }}}
 
 #= execute cmd {{{
-for g_path in ${__gb_path//:/ }; do
-    if [ -n "$g_path" ] && [ -f "$g_path/$g_cmdName" ] ; then
-
-        source "$g_path/$g_cmdName"
-        if type __run__ &> /dev/null ; then
-            __run__ "$@"
-            exit $?
-        else
-            error "command '$g_cmdName' doesn't have a '__run__' function"
-            exit 1
-        fi
-
+g_cmdPath=$(resolveCmd $g_cmdName)
+if [ -e $g_cmdPath ] ; then
+    source "$g_cmdPath"
+    if type __run__ &> /dev/null ; then
+        __run__ "$@"
+        exit $?
+    else
+        error "command '$g_cmdPath' doesn't have a '__run__' function"
+        exit 1
     fi
-done
-error "command '$g_cmdName' is not known"
-exit 1
+else
+    error "command $g_cmdName cannot be found"
+    exit 1
+fi
 #= }}}
