@@ -1,6 +1,3 @@
-
-
-
 __run__() {
     cat <<EOF
 Usage:

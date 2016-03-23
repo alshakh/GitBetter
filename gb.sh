@@ -5,7 +5,7 @@
 ### For example it can't use 'gb ___resolve-cmd'.
 
 if [[ "$@" == "" ]] ; then
-    gb ??
+    gb help
     exit 1
 fi
 

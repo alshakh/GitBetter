@@ -1,0 +1,23 @@
+
+__run__() {
+    if (( $# == 0 )) ; then
+        gb ___usage
+        return 0
+    else
+        local c_cmdPath=$(gb ___resolve-cmd "$1")
+        shift
+
+        source "$c_cmdPath" &> /dev/null
+        if type __usage__ &> /dev/null ; then
+            __usage__ "$@"
+            return $?
+        else
+            return 1
+        fi
+    fi
+}
+
+__complete__() {
+    gb ___complete "^$CURRENT_TERM"
+    return 0
+}
