@@ -1,6 +1,6 @@
 # Agit
 
-:warining: ***project is not usable yet. Developement has stopped for the most part!*** :warining:
+:warning: ***project is not usable yet. Developement has stopped for the most part!*** :warning:
 
 An easy to remember interface for git, powered with autocompletion.
 
