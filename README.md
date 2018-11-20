@@ -1,6 +1,8 @@
-# GitBetter
+# Agit
 
-An easy to remember interface for git
+:warining ***project is not usable yet. Developement has stopped for the most part!***
+
+An easy to remember interface for git, powered with autocompletion.
 
 Inspired and heavily influenced by [**g2** by **orefalo**](https://github.com/orefalo/g2).
 
